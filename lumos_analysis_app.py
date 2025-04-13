@@ -11,18 +11,18 @@ st.write('This app is currently under development stage.')
 with st.form('data input'):   
     st.header('Data Upload & Input Processing')
     uploaded_file=st.file_uploader("Upload your data here to analyze: ",type='csv')
-    variables=st.text_input("Enter the variables, separated by commas without space","enter,variable,like,this")
-    delim=st.radio('What is your separation delimiter?',['hyphen (-)','underscore (_)'],index=None)
+    delim=st.radio('What is your variable separation delimiter?',['hyphen (-)','underscore (_)'],index=None)
+    variables=st.text_input("Enter the variables, separated by delimiter specified above","variable 1-variable 2-variable-3")
     st.form_submit_button('Initiate Analysis')
 
 
 # Input Processing
 df=pd.read_csv(uploaded_file)
-variables=variables.split(',')
 if delim == 'hyphen (-)':
     delim='-'
 else:
     delim='_'
+variables=variables.split(delim)
 # Data Processing
 df_tidy = (
     df[['strip name', 'line_peak_above_background_1', 'line_peak_above_background_2', 'line_area_1', 'line_area_2']]
