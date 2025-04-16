@@ -122,8 +122,6 @@ if 'df_tidy' in st.session_state:
 
     if color == 'None': color = None
     if facet == 'None': facet = None
-    if color == facet and color is not None:
-        tab4.warning("Color and facet variables should not be the same.")
 
     y_vars = [
         'TLH_normalized', 'CLH_normalized', 'T-C_normalized',
@@ -143,7 +141,8 @@ if 'df_tidy' in st.session_state:
                     facet_col=facet,
                     trendline='lowess',
                     log_x=(log_x == 'yes'),
-                    title=f"{y} vs {x}"
+                    title=f"The effect of {x} on {y}",
+                    hover_data=df_tidy
                 )
             else:
                 df_tidy[x] = df_tidy[x].astype(str)
@@ -153,7 +152,8 @@ if 'df_tidy' in st.session_state:
                     color=color,
                     facet_col=facet,
                     log_x=(log_x == 'yes'),
-                    title=f"{y} by {x}"
+                    title=f"The effect of {x} on {y}",
+                    hover_data=df_tidy
                 )
             tab4.plotly_chart(fig, use_container_width=True)
         except Exception as e:
