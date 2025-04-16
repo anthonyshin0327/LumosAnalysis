@@ -12,7 +12,7 @@ with st.form('data input'):
     st.header('Data Upload & Input Processing')
     uploaded_file=st.file_uploader("Upload your data here to analyze: ",type='csv')
     delim=st.radio('What is your variable separation delimiter?',['hyphen (-)','underscore (_)'],index=None)
-    variables=st.text_input("Enter the variables, separated by delimiter specified above","variable 1-variable 2-variable-3")
+    variables=st.text_input("Enter the variables, separated by delimiter specified above","variable 1-variable 2-variable 3")
     st.form_submit_button('Initiate Analysis')
 
 
@@ -48,9 +48,9 @@ df_tidy = (
     )
     .drop(columns=['strip name'])
 )
-df["T-C_normalized"] = df["TLH_normalized"] - df["CLH_normalized"]
-df["T/C_normalized"] = df["TLH_normalized"] / df["CLH_normalized"]
-df["C/T_normalized"] = df["CLH_normalized"] / df["TLH_normalized"]
+df_tidy["T-C_normalized"] = df_tidy["TLH_normalized"] - df_tidy["CLH_normalized"]
+df_tidy["T/C_normalized"] = df_tidy["TLH_normalized"] / df_tidy["CLH_normalized"]
+df_tidy["C/T_normalized"] = df_tidy["CLH_normalized"] / df_tidy["TLH_normalized"]
 
 # Descriptie Statistics
 stat=(
