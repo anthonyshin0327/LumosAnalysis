@@ -38,10 +38,7 @@ df_tidy = (
         TLH_normalized=lambda x: x.TLH / (x.TLH + x.CLH),
         CLH_normalized=lambda x: x.CLH / (x.TLH + x.CLH),
         TLA_normalized=lambda x: x.TLA / (x.TLA + x.CLA),
-        CLA_normalized=lambda x: x.CLA / (x.TLA + x.CLA),
-        `T-C_normalized`=lambda x: x.TLH_normalized - x.CLH_normalized,
-        `T/C_normalized`=lambda x: x.TLH_normalized/x.CLH_normalized,
-        `C/T_normalized`=lambda x: x.CLH_normalized/x.TLH_normalized
+        CLA_normalized=lambda x: x.CLA / (x.TLA + x.CLA)
     )
     .assign(
         **df['strip name'].str.split(delim, expand=True)
@@ -51,6 +48,9 @@ df_tidy = (
     )
     .drop(columns=['strip name'])
 )
+df["T-C_normalized"] = df["TLH_normalized"] - df["CLH_normalized"]
+df["T/C_normalized"] = df["TLH_normalized"] / df["CLH_normalized"]
+df["C/T_normalized"] = df["CLH_normalized"] / df["TLH_normalized"]
 
 # Descriptie Statistics
 stat=(
