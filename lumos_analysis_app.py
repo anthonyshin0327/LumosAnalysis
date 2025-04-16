@@ -132,6 +132,13 @@ if 'df_tidy' in st.session_state:
 
     for y in y_vars:
         try:
+            # --- Optional dtype cast ---
+            if color and color in df_tidy.columns:
+                df_tidy[color] = df_tidy[color].astype('category')
+            if facet and facet in df_tidy.columns:
+                df_tidy[facet] = df_tidy[facet].astype('category')
+    
+            # --- Plot section ---
             if x_type == 'continuous':
                 df_tidy[x] = pd.to_numeric(df_tidy[x], errors='coerce')
                 fig = px.scatter(
@@ -155,6 +162,9 @@ if 'df_tidy' in st.session_state:
                     title=f"The effect of {x} on {y}",
                     hover_data=df_tidy
                 )
+    
             tab4.plotly_chart(fig, use_container_width=True)
+    
         except Exception as e:
             tab4.error(f"Could not plot {y}: {e}")
+    
