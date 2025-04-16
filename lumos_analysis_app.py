@@ -4,7 +4,6 @@ import plotly.express as px
 
 # App title and intro
 st.title('Eli Research & Development Lumos Analysis App')
-st.write('This app is currently under development stage.')
 
 # --- Form for file upload and variable input ---
 with st.form('data input'):
