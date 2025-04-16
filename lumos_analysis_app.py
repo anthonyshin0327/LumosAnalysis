@@ -30,7 +30,7 @@ if button:
         st.stop()
 
     try:
-        st.write('The dataset has been successfully entered. Your data has been successfully processed and you should now be able to see the processed dataset as follows. To see graphs, please go to the tab named "2D Graph."')
+        st.write('The dataset has been successfully entered. Your data has been successfully processed and you should now be able to see the processed dataset as follows. To see graphs, please go to the tab named "2D Graphs."')
         # Parse delimiter and variable names
         delim = '-' if delim == 'hyphen (-)' else '_'
         variables = variables.split(delim)
