@@ -38,7 +38,10 @@ df_tidy = (
         TLH_normalized=lambda x: x.TLH / (x.TLH + x.CLH),
         CLH_normalized=lambda x: x.CLH / (x.TLH + x.CLH),
         TLA_normalized=lambda x: x.TLA / (x.TLA + x.CLA),
-        CLA_normalized=lambda x: x.CLA / (x.TLA + x.CLA)
+        CLA_normalized=lambda x: x.CLA / (x.TLA + x.CLA),
+        `T-C_normalized`=lambda x: x.TLH_normalized - x.CLH_normalized,
+        `T/C_normalized`=lambda x: x.TLH_normalized/x.CLH_normalized,
+        `C/T_normalized`=lambda x: x.CLH_normalized/x.TLH_normalized
     )
     .assign(
         **df['strip name'].str.split(delim, expand=True)
@@ -51,7 +54,7 @@ df_tidy = (
 
 # Descriptie Statistics
 stat=(
-    df_tidy[variables+['TLH_normalized','CLH_normalized']]
+    df_tidy[variables+['TLH_normalized','CLH_normalized','T-C_normalized','T/C_normalized','C/T_normalized']]
     .groupby(variables)
     .describe()
 )
@@ -73,11 +76,11 @@ tab3.write(stat)
 
 tab4.header("2D Graphs")
 
-x=tab4.radio(
+x=tab4.selectbox(
     'Choose your x-axis: ',
     options=variables
     )
-x_cont_or_cat=tab4.pills(
+x_cont_or_cat=tab4.selectbox(
     'Is your x-axis variable continuous or categorical?: ',
     options=['continuous','categorical']
     )
@@ -97,7 +100,7 @@ log_x=tab4.radio(
     options=['yes','no'],
     key='log_x'
 )
-for y in ['TLH_normalized','CLH_normalized','TLA_normalized','CLA_normalized','TLH','CLH','TLA','CLA']:
+for y in ['TLH_normalized','CLH_normalized','T-C_normalized','T/C_normalized','C/T_normalized','TLA_normalized','CLA_normalized','TLH','CLH','TLA','CLA']:
     if x_cont_or_cat=='continuous':
         df_tidy[x].astype(float)
         fig=px.scatter(
